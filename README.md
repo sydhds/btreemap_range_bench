@@ -21,10 +21,10 @@ First, you need to generate fake data then run the bench:
     xdg-open target/criterion/find_bounds/report/index.html
 
 Notes:
-* Benchmark is run multiple time with data_{10/25/50/100/250/500/200}.json
+* Benchmark is run multiple time with data_{10/25/50/100}.json
 
 # Results
 
-We compare the 2 functions with 10, 25, 50, 100 entries (in BtreeMap), querying it with 2O random values:
+We compare the 2 functions with 10, 25, 50, 100 entries (in BtreeMap), querying it with 20 random values:
 
 ![Results](https://github.com/sydhds/btreemap_range_bench/blob/main/results.svg?raw=true)
