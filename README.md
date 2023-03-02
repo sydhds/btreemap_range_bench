@@ -3,8 +3,8 @@
 Bench BTreeMap find range of 2 diff impl 
 
 Bench between: 
-* find_bounds_range: using 2 BtreeMap.range() call
-* find_bounds_custom: using 2 ifs + BTreeMap iterator
+* [find_bounds_range](src/lib.rs#L56): using 2 BtreeMap.range() call
+* [find_bounds_custom](src/lib.rs#L5): using 2 ifs + BTreeMap iterator
 
 # Tests
 
