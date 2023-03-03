@@ -62,6 +62,64 @@ pub fn find_bounds_range(m: &BTreeMap<u32, String>, i: u32) -> (Option<(&u32, &S
     ).next())
 }
 
+pub fn find_bounds_vec(v: &mut Vec<(u32, String)>, i: u32) -> (Option<(&u32, &String)>, Option<(&u32, &String)>) {
+
+    v.sort_by(|a, b| a.0.cmp(&b.0));
+
+    let v_len = v.len();
+    let v_slice = &v[..];
+    let res = v_slice.binary_search_by_key(&i, |&(a, _)| a);
+
+    let mut lower_bound: Option<(&u32, &String)> = None;
+    let mut higher_bound: Option<(&u32, &String)> = None;
+
+    match res {
+        Ok(idx) => {
+            lower_bound = Some((&v[idx].0, &v[idx].1));
+            higher_bound = Some((&v[idx].0, &v[idx].1));
+        },
+        Err(idx) => {
+            if idx > 1 {
+                lower_bound = Some((&v[idx-1].0, &v[idx-1].1));
+            }
+            if idx < v_len {
+                higher_bound = Some((&v[idx].0, &v[idx].1));
+            }
+        },
+    }
+
+    return (lower_bound, higher_bound)
+}
+
+pub fn find_bounds_vec_no_sort(v: &Vec<(u32, String)>, i: u32) -> (Option<(&u32, &String)>, Option<(&u32, &String)>) {
+
+    // v.sort_by(|a, b| a.0.cmp(&b.0));
+
+    let v_len = v.len();
+    let v_slice = &v[..];
+    let res = v_slice.binary_search_by_key(&i, |&(a, _)| a);
+
+    let mut lower_bound: Option<(&u32, &String)> = None;
+    let mut higher_bound: Option<(&u32, &String)> = None;
+
+    match res {
+        Ok(idx) => {
+            lower_bound = Some((&v[idx].0, &v[idx].1));
+            higher_bound = Some((&v[idx].0, &v[idx].1));
+        },
+        Err(idx) => {
+            if idx > 1 {
+                lower_bound = Some((&v[idx-1].0, &v[idx-1].1));
+            }
+            if idx < v_len {
+                higher_bound = Some((&v[idx].0, &v[idx].1));
+            }
+        },
+    }
+
+    return (lower_bound, higher_bound)
+}
+
 
 #[cfg(test)]
 mod test {
@@ -116,5 +174,35 @@ mod test {
         assert_eq!(around_9, around_9c);
         assert_eq!(around_e, around_ec);
         assert_eq!(around_6, around_6c);
+
+        // Find lower & higher bounds using vec.binaray_search_by_key
+        let mut v: Vec<(u32, String)> = btm
+            .iter()
+            .map(|(version, st)| (*version, st.clone()))
+            .collect();
+
+        let around_0v = find_bounds_vec(&mut v, 0);
+        println!("around 0v: {around_0v:?}");
+        assert_eq!(around_0, around_0v);
+
+        let around_5v = find_bounds_vec(&mut v, 5);
+        println!("around 5v: {around_5v:?}");
+        assert_eq!(around_5, around_5v);
+
+        let around_9v = find_bounds_vec(&mut v, 9);
+        println!("around 9v: {around_9v:?}");
+        assert_eq!(around_9, around_9v);
+
+        // edge case: empty vec
+        let mut v0: Vec<(u32, String)> = vec![];
+        let around_ev = find_bounds_vec(&mut v0, 9);
+        println!("[empty vec] around ev: {around_ev:?}");
+        assert_eq!(around_e, around_ev);
+
+        // edge case: exact value
+        let around_6v = find_bounds_vec(&mut v, 6);
+        println!("[exact] around 6v: {around_6v:?}");
+        assert_eq!(around_6, around_6v);
+
     }
 }

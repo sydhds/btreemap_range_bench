@@ -21,7 +21,7 @@ First, you need to generate fake data then run the bench:
     xdg-open target/criterion/find_bounds/report/index.html
 
 Notes:
-* Benchmark is run multiple time with data_{10/25/50/100}.json
+* Benchmark is run multiple time using data_{10/25/50/100}.json
 
 # Results
 

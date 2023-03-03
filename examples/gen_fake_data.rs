@@ -1,3 +1,5 @@
+// Generate fake data (in json files) for the benchmark
+
 use std::collections::BTreeMap;
 use std::fs::File;
 use fake::{Dummy, Fake, Faker};
