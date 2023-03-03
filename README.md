@@ -5,6 +5,9 @@ Bench BTreeMap find range of 2 diff impl
 Bench between: 
 * [find_bounds_range](src/lib.rs#L56): using 2 BtreeMap.range() call
 * [find_bounds_custom](src/lib.rs#L5): using 2 ifs + BTreeMap iterator
+* [find_bounds_vec](src/lib.rs#L65): using Vec::binary_search_by_key + sort
+* [find_bounds_vec_no_sort](src/lib.rs#L94): using Vec::binary_search_by_key + no sort (assume it has already been sorted)
+
 
 # Tests
 
